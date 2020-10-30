@@ -1,0 +1,56 @@
+{% extends 'mainapp/main.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="row">
+        <!-- task, page, download counter  start -->
+
+        <div class="col-md-6">
+            <a href="{% url 'invoice_index' %}">
+                <div class="card bg-c-green update-card">
+                    <div class="card-block">
+                        <div class="row align-items-end">
+                            <div class="col-8">
+                                <h4 class="text-white">Invoices</h4>
+                                <h6 class="text-white m-b-0">Create and manage invoices.</h6>
+                            </div>
+                            <div class="col-4 text-right">
+                                <canvas id="update-chart-2" height="50"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <p class="text-white m-b-0"></p>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="col-md-6">
+            <a href="{% url 'customer_index' %}">
+                <div class="card bg-c-lite-green update-card">
+                    <div class="card-block">
+                        <div class="row align-items-end">
+                            <div class="col-8">
+                                <h4 class="text-white">Customers</h4>
+                                <h6 class="text-white m-b-0">Create and manage customers.</h6>
+                            </div>
+                            <div class="col-4 text-right">
+                                <canvas id="update-chart-4" height="50"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <p class="text-white m-b-0"></p>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+        <!-- task, page, download counter  end -->
+    </div>
+
+{% endblock content %}
+    

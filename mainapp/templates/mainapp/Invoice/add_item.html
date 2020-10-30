@@ -1,0 +1,91 @@
+{% extends 'mainapp/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Create Invoice</h5>
+                    <span class="text-muted">Create new invoice</span>
+                    <div class="card-header-right">
+                        <ul class="list-unstyled card-option">
+                            <li><i class="feather icon-maximize full-card"></i></li>
+                            <li><i class="feather icon-minus minimize-card"></i></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{ form.service|attr:"tabindex:1"|as_crispy_field }}
+                                {{ form.description|attr:"tabindex:2"|as_crispy_field }}
+                                {{ form.quantity|attr:"tabindex:3"|as_crispy_field }}
+                                {{ form.rate_per_unit|attr:"tabindex:4"|as_crispy_field }}
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-block">
+                                    <div class="dt-responsive table-responsive">
+                                        <table id="myTable" class="table w-100 mx-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Sr. No.</th>
+                                                <th>Description</th>
+                                                <th>Qty</th>
+                                                <th>Rate/Unit</th>
+                                                <th>Amount</th>
+                                                <th class="nosort">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for item in invoice_items %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ item.service }} {{ item.description }}</td>
+                                                    <td>{{ item.quantity }}</td>
+                                                    <td>{{ item.rate_per_unit }}</td>
+                                                    <td>{{ item.amount }}</td>
+                                                    <td>
+                                                        <div class="table-actions text-center">
+                                                            {#                                                            <a href="{% url 'service_edit' service.id %}"> <i#}
+                                                            {#                                                                    class="feather icon-edit text-success"></i></a>#}
+                                                            {#                                                            <a href="{% url 'service_delete' service.id %}"#}
+                                                            {#                                                               onclick="return confirm('Are you sure you want to delete this item?');"><i#}
+                                                            {#                                                                    class="feather icon-trash-2 text-danger"></i></a>#}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-12 pt-1">
+                                <input class="btn btn-success mt-4" type="submit" value="Add Item"
+                                       tabindex="2">
+                                <a class="btn btn-primary mt-4" href="{% url 'invoice_index' %}"
+                                   accesskey="b">Finish</a>
+                            </div>
+                            <div class="col-sm-12">
+                                {{ form.errors }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script_end %}
+    <script>
+        $(document).ready(function () {
+             $('#myTable').dataTable({responsive: true});
+        });
+    </script>
+{% endblock %}

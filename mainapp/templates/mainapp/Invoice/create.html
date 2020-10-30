@@ -1,0 +1,52 @@
+{% extends 'mainapp/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Create Invoice</h5>
+                    <span class="text-muted">Create new invoice</span>
+                    <div class="card-header-right">
+                        <ul class="list-unstyled card-option">
+                            <li><i class="feather icon-maximize full-card"></i></li>
+                            <li><i class="feather icon-minus minimize-card"></i></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form.firm|attr:"tabindex:1"|as_crispy_field }}
+                                {{ form.customer|attr:"tabindex:1"|as_crispy_field }}
+                                {{ form.tax_slab|attr:"tabindex:1"|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.challan_nos|attr:"tabindex:1"|as_crispy_field }}
+                                {{ form.item_description|attr:"tabindex:1"|as_crispy_field }}
+                                {{ form.entry_time|attr:"tabindex:1"|as_crispy_field }}
+                            </div>
+                            <div class="col-12 pt-1">
+                                <input class="btn btn-success mt-4" type="submit" value="Save -> Add Items"
+                                       tabindex="2">
+                                <a class="btn btn-secondary mt-4" href="{% url 'invoice_index' %}"
+                                   accesskey="b"><u>B</u>ack</a>
+                            </div>
+                            <div class="col-sm-12">
+                                {{ form.errors }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script_end %}
+    {{ form.media }}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'mainapp/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Add Service</h5>
+                    <span class="text-muted">Add New Service</span>
+                    <div class="card-header-right">
+                        <ul class="list-unstyled card-option">
+                            <li><i class="feather icon-maximize full-card"></i></li>
+                            <li><i class="feather icon-minus minimize-card"></i></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{ form.name|attr:"tabindex:1"|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4 pt-1">
+                                <input class="btn btn-success mt-4" type="submit" value="Save"
+                                       tabindex="2">
+                                <a class="btn btn-secondary mt-4" href="{% url 'service_index' %}" accesskey="b"><u>B</u>ack</a>
+                            </div>
+                            <div class="col-sm-12">
+                                {{ form.errors }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

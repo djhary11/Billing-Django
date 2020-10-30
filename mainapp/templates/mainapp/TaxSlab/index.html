@@ -1,0 +1,60 @@
+{% extends 'mainapp/main.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Tax Slabs</h5>
+                    <span class="text-muted">View and Manage Tax Slabs.</span>
+                    <div class="card-header-right">
+                        <ul class="list-unstyled card-option">
+                            <li><i class="feather icon-maximize full-card"></i></li>
+                            <li><i class="feather icon-minus minimize-card"></i></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <a class="btn btn-primary mb-3" href="{% url 'tax_slab_add' %}" accesskey="a"><u>A</u>dd Tax Slab</a>
+                    <div class="dt-responsive table-responsive">
+                         <table id="myTable" class="table w-100 mx-0">
+                        <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Slab Value</th>
+                            <th class="nosort">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for tax_slab in tax_slabs %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ tax_slab.value }}</td>
+                                <td>
+                                    <div class="table-actions text-center">
+                                        <a href="{% url 'tax_slab_edit' tax_slab.id %}"> <i class="feather icon-edit text-success"></i></a>
+                                        <a href="{% url 'tax_slab_delete' tax_slab.id %}"
+                                           onclick="return confirm('Are you sure you want to delete this item?');"><i
+                                                class="feather icon-trash-2 text-danger"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script_end %}
+    <script>
+        $(document).ready(function () {
+            $('#myTable').dataTable({responsive: true});
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'mainapp/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Add Service</h5>
+                    <span class="text-muted">Add New Service</span>
+                    <div class="card-header-right">
+                        <ul class="list-unstyled card-option">
+                            <li><i class="feather icon-maximize full-card"></i></li>
+                            <li><i class="feather icon-minus minimize-card"></i></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form.name|attr:"tabindex:1"|as_crispy_field }}
+                                {{ form.address|attr:"tabindex:2"|as_crispy_field }}
+                                {{ form.state|attr:"tabindex:3"|as_crispy_field }}
+                                {{ form.mobile_number|attr:"tabindex:4"|as_crispy_field }}
+                                {{ form.email|attr:"tabindex:5"|as_crispy_field }}
+                                {{ form.gstin_number|attr:"tabindex:11"|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.bank_ac_name|attr:"tabindex:6"|as_crispy_field }}
+                                {{ form.bank_name|attr:"tabindex:7"|as_crispy_field }}
+                                {{ form.bank_branch_address|attr:"tabindex:8"|as_crispy_field }}
+                                {{ form.bank_ac_number|attr:"tabindex:9"|as_crispy_field }}
+                                {{ form.bank_ifsc_code|attr:"tabindex:10"|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4 pt-1">
+                                <input class="btn btn-success mt-4" type="submit" value="Save"
+                                       tabindex="2">
+                                <a class="btn btn-secondary mt-4" href="{% url 'customer_index' %}" accesskey="b"><u>B</u>ack</a>
+                            </div>
+                            <div class="col-sm-12">
+                                {{ form.errors }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

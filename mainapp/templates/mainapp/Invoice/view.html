@@ -1,0 +1,149 @@
+{% load mathfilters %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Invoice</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-4">
+            <h2>{{ invoice.firm.name|upper }}</h2>
+            {{ invoice.firm.address }}<br/>
+            Phone No.: {{ invoice.firm.mobile_number }}<br>
+            Email: {{ invoice.firm.email }}<br>
+            GSTIN: {{ invoice.firm.gstin_number }}<br>
+            State: {{ invoice.firm.state }}<br>
+        </div>
+        <div class="col-12 text-center my-5"><h4>TAX INVOICE</h4></div>
+        <div class="col-6">
+            <strong>Bill To:</strong><br>
+            <strong>{{ invoice.customer.name }}</strong><br>
+            {{ invoice.customer.address }}<br>
+            GSTIN No.: {{ invoice.customer.gstin_number }}<br>
+            Phone No.: {{ invoice.customer.mobile_number }}<br>
+            State: {{ invoice.customer.state }}<br>
+            <br>
+            <br>
+        </div>
+        <div class="col-6 text-right">
+            Place of supply: {{ invoice.firm.state }} <br>
+            <strong>Invoice No.: {{ invoice.entry_time|date:'Y/m' }}/{{ invoice.id }}</strong><br>
+            <strong>Challan No(s): {{ invoice.challan_nos }}</strong><br>
+            <strong>Date: {{ invoice.entry_time }}</strong><br>
+        </div>
+        <div class="col-12 my-2">
+            <strong>Item Description: </strong> {{ invoice.item_description }}<br>
+        </div>
+        <div class="col-12 my-3">
+            <table class="table">
+                <thead class="">
+                <tr>
+                    <th scope="col">S.NO.</th>
+                    <th scope="col">Work Description</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Rate/Unit</th>
+                    <th scope="col">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in invoice.invoiceitem_set.all %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ item.service }} {{ item.description }}</td>
+                        <td>{{ item.quantity }} Units</td>
+                        <td> ₹ {{ item.rate_per_unit }}</td>
+                        <td> ₹ {{ item.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <strong>OUR BANK DETAILS</strong>
+            <div>
+                A/C Name: {{ invoice.firm.bank_ac_name }} <br>
+                A/C NO.: {{ invoice.firm.bank_ac_number }} <br>
+                BANK: {{ invoice.firm.bank_name }} <br>
+                IFSC: {{ invoice.firm.bank_ifsc_code }} <br>
+            </div>
+            <div class="mt-4">
+                <strong>Thank you for your business.</strong>
+            </div>
+
+        </div>
+        <div class="col-5 offset-1">
+            <div class="row">
+                {% if invoice.tax_slab.value > 0 %}
+                    <div class="col-6">
+                        Sub Total
+                    </div>
+                    <div class="col-6 text-right">
+                        ₹ {{ invoice.sub_total}}
+                    </div>
+                    <div class="col-6">
+                        SGST@{{ invoice.tax_slab.value|div:2 }}%
+                    </div>
+                    <div class="col-6 text-right">
+                        ₹ {{invoice.gst_amount|div:2}}
+                    </div>
+                    <div class="col-6">
+                        CGST@{{ invoice.tax_slab.value|div:2 }}%
+                    </div>
+                    <div class="col-6 text-right">
+                        ₹ {{invoice.gst_amount|div:2}}
+                    </div>
+                {% endif %}
+
+                <div class="col-6 ">
+                    <strong>Total Amount</strong>
+                </div>
+                <div class="col-6 text-right">
+                    <strong> ₹ {{ invoice.total_with_gst }}</strong>
+                </div>
+                <div class="col-12">
+                    <div class="mt-4">
+                        <strong>INVOICE AMOUNT IN WORDS</strong>
+                    </div>
+                    <div>
+                        <strong>{{ total_amount_in_words_en|title }} Rupees Only</strong>
+                    </div>
+                    <div>
+                        <strong>{{ total_amount_in_words_hi }} रुपए मात्र</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-5 text-center">
+                <strong>For, {{ invoice.firm.name|upper }}</strong>
+                <br><br><br><br><br>
+                <strong>Authorized Signatory</strong>
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <br><br><br>
+            <strong>{{ invoice.firm.footer_text|linebreaks }}</strong>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>

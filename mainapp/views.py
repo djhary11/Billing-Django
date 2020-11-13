@@ -309,7 +309,7 @@ def invoice_view(request, invoice_id):
     total_amount_in_words_en = num_to_word(total_in_num, lang="en")
     total_amount_in_words_hi = num_to_word(total_in_num, lang="hi")
     context = {'invoice': invoice, 'total_amount_in_words_en': total_amount_in_words_en,
-               'total_amount_in_words_hi': total_amount_in_words_hi}
+               'total_amount_in_words_hi': total_amount_in_words_hi, 'total_in_num': total_in_num}
     return render(request, 'mainapp/Invoice/view.html', context)
 
 
@@ -329,3 +329,14 @@ def invoice_edit(request, invoice_id):
             messages.warning(request, "Unable to update Invoice, " + error_string)
     context = {'form': form}
     return render(request, 'mainapp/Invoice/create.html', context)
+
+
+@login_required(login_url='login')
+def invoice_item_delete(request, invoice_item_id):
+    try:
+        invoice_item = InvoiceItem.objects.get(id=invoice_item_id)
+        invoice_item.delete()
+        messages.success(request, "Invoice Item deleted Successfully")
+    except:
+        messages.warning(request, "Unable to delete Invoice Item")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

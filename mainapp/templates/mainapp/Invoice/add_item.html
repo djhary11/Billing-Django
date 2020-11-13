@@ -26,6 +26,7 @@
                                 {{ form.description|attr:"tabindex:2"|as_crispy_field }}
                                 {{ form.quantity|attr:"tabindex:3"|as_crispy_field }}
                                 {{ form.rate_per_unit|attr:"tabindex:4"|as_crispy_field }}
+                                Total Amount : <span id="total_amount">0</span>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-block">
@@ -85,7 +86,19 @@
 {% block script_end %}
     <script>
         $(document).ready(function () {
-             $('#myTable').dataTable({responsive: true});
+            $('#myTable').dataTable({responsive: true});
+
+            function calculate() {
+                console.log('fun triggered')
+                let quantity = Number($('#id_quantity').val())
+                let rate_per_unit = Number($('#id_rate_per_unit').val())
+                let total_amount = rate_per_unit * quantity
+                $('#total_amount').html(total_amount)
+            }
+
+            $("#id_quantity,#id_rate_per_unit").change(function () {
+                calculate()
+            });
         });
     </script>
 {% endblock %}

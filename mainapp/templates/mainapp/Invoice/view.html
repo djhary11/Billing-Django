@@ -18,7 +18,7 @@
         <div class="col-12 mt-4">
             <h2>{{ invoice.firm.name|upper }}</h2>
             {{ invoice.firm.address }}<br/>
-            Phone No.: {{ invoice.firm.mobile_number }}<br>
+            Contact No.: {{ invoice.firm.mobile_number }}<br>
             Email: {{ invoice.firm.email }}<br>
             GSTIN: {{ invoice.firm.gstin_number }}<br>
             State: {{ invoice.firm.state }}<br>
@@ -29,13 +29,13 @@
             <strong>{{ invoice.customer.name }}</strong><br>
             {{ invoice.customer.address }}<br>
             GSTIN No.: {{ invoice.customer.gstin_number }}<br>
-            Phone No.: {{ invoice.customer.mobile_number }}<br>
+            Contact No.: {{ invoice.customer.mobile_number }}<br>
             State: {{ invoice.customer.state }}<br>
             <br>
             <br>
         </div>
         <div class="col-6 text-right">
-            Place of supply: {{ invoice.firm.state }} <br>
+            Place of Supply: {{ invoice.firm.state }} <br>
             <strong>Invoice No.: {{ invoice.entry_time|date:'Y/m' }}/{{ invoice.id }}</strong><br>
             <strong>Challan No(s): {{ invoice.challan_nos }}</strong><br>
             <strong>Date: {{ invoice.entry_time }}</strong><br>
@@ -87,19 +87,19 @@
                         Sub Total
                     </div>
                     <div class="col-6 text-right">
-                        ₹ {{ invoice.sub_total}}
+                        ₹ {{ invoice.sub_total }}
                     </div>
                     <div class="col-6">
                         SGST@{{ invoice.tax_slab.value|div:2 }}%
                     </div>
                     <div class="col-6 text-right">
-                        ₹ {{invoice.gst_amount|div:2}}
+                        ₹ {{ invoice.gst_amount|div:2 }}
                     </div>
                     <div class="col-6">
                         CGST@{{ invoice.tax_slab.value|div:2 }}%
                     </div>
                     <div class="col-6 text-right">
-                        ₹ {{invoice.gst_amount|div:2}}
+                        ₹ {{ invoice.gst_amount|div:2 }}
                     </div>
                 {% endif %}
 
@@ -108,6 +108,12 @@
                 </div>
                 <div class="col-6 text-right">
                     <strong> ₹ {{ invoice.total_with_gst }}</strong>
+                </div>
+                <div class="col-6 ">
+                    <strong>Net Amount</strong>
+                </div>
+                <div class="col-6 text-right">
+                    <strong> ₹ {{ total_in_num }}</strong>
                 </div>
                 <div class="col-12">
                     <div class="mt-4">

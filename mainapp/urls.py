@@ -30,6 +30,9 @@ urlpatterns = [
     path('invoice/', views.invoice_index, name="invoice_index"),
     path('invoice/create/', views.invoice_create, name="invoice_create"),
     path('invoice/add-item/<str:invoice_id>/', views.invoice_add_item, name="invoice_add_item"),
+    path('invoice/delete-item/<str:invoice_item_id>/', views.invoice_item_delete, name="invoice_delete_item"),
     path('invoice/view/<str:invoice_id>/', views.invoice_view, name="invoice_view"),
     path('invoice/edit/<str:invoice_id>/', views.invoice_edit, name="invoice_edit"),
+    path('invoice/delete/<str:invoice_id>/', views.invoice_delete, name="invoice_delete"),
+
 ]

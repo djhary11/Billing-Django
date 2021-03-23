@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 from mainapp.decorators import unauthenticated_user
@@ -339,4 +340,15 @@ def invoice_item_delete(request, invoice_item_id):
         messages.success(request, "Invoice Item deleted Successfully")
     except:
         messages.warning(request, "Unable to delete Invoice Item")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required(login_url='login')
+def invoice_delete(request, invoice_id):
+    try:
+        invoice = Invoice.objects.get(id=invoice_id)
+        invoice.delete()
+        messages.success(request, "Invoice deleted Successfully")
+    except:
+        messages.warning(request, "Unable to delete Invoice")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
